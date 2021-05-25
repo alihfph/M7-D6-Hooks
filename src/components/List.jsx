@@ -1,28 +1,25 @@
 import React from "react";
 import { toggleCompleted, reset } from "../store/actions";
 import { Button } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
-
-
-export default function  List (props){
+export default function List(props) {
   const list = useSelector((state) => state.list);
-    return (
-      <>
-        <ul>
-          {list.map((todo) => (
-            <li
-              key={todo.id}
-              onClick={() => toggleCompleted(todo)}
-              className={todo.completed ? "strikethrough" : ""}
-            >
-              {todo.description}
-            </li>
-          ))}
-        </ul>
-        <Button onClick={reset}>reset</Button>
-      </>
-    );
-  }
-
-
+  const dispatch = useDispatch();
+  return (
+    <>
+      <ul>
+        {list.map((todo) => (
+          <li
+            key={todo.id}
+            onClick={() => dispatch(toggleCompleted(todo))}
+            className={todo.completed ? "strikethrough" : ""}
+          >
+            {todo.description}
+          </li>
+        ))}
+      </ul>
+      <Button onClick={() => dispatch(reset())}>reset</Button>
+    </>
+  );
+}
